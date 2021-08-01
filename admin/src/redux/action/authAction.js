@@ -24,6 +24,29 @@ export const login = (user) => {
   };
 };
 
+export const signup = (user) => {
+  return async (dispatch) => {
+    dispatch({ type: ActionTypes.SIGNUP_REQUEST });
+    const res = await axios.post(`/admin/signup`, {
+      ...user, //Spread oprater
+    });
+    if (res.status === 200) {
+      const { message } = res.data;
+      dispatch({ type: ActionTypes.SIGNUP_SUCCESS, payload: { message } });
+    } else {
+      const { message } = res.data;
+      if (res.status === 400) {
+        dispatch({ type: ActionTypes.SIGNUP_FAILED, payload: { message } });
+      }
+      if (res.status === 422) {
+        console.log(res, "action");
+        dispatch({ type: ActionTypes.SIGNUP_FAILED, payload: { message } });
+      }
+      dispatch({ type: ActionTypes.SIGNUP_FAILED, payload: { message } });
+    }
+  };
+};
+
 export const isUserLogedIn = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
@@ -35,6 +58,19 @@ export const isUserLogedIn = () => {
         type: ActionTypes.LOGIN_FAILER,
         payload: { error: "Login failed" },
       });
+    }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    dispatch({ type: ActionTypes.LOGOUT_REQUEST });
+    const res = await axios.post(`/admin/logout`);
+    if (res.status === 200) {
+      localStorage.clear();
+      dispatch({ type: ActionTypes.LOGOUT_SUCCESS });
+    } else {
+      dispatch({ type: ActionTypes.LOGOUT_FAILED, payload: res.data.error });
     }
   };
 };

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
 import { Form, Container, Row, Col, Button } from "react-bootstrap";
 import Input from "../../components/UI/Input";
-import { login, isUserLogedIn } from "../../redux/action/authAction";
+import { login } from "../../redux/action/authAction";
 import { Redirect } from "react-router-dom";
 
 const Signin = (props) => {
@@ -12,12 +12,6 @@ const Signin = (props) => {
   const [password, setPassword] = useState("");
   // const [error, setError] = useState("");
   const auth = useSelector((state) => state.login);
-
-  useEffect(() => {
-    if (!auth.authenticate) {
-      dispatch(isUserLogedIn());
-    }
-  }, []);
 
   // call api and get data
   const sendLoginRequest = async (e) => {

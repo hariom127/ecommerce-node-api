@@ -1,13 +1,11 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import "./style.css";
 
-const Home = (props) => {
+const Product = (props) => {
   return (
     <Layout sidebar>
-      <p>Dashboard</p>
+      <p>Products</p>
     </Layout>
   );
 };
-
-export default Home;
+export default Product;

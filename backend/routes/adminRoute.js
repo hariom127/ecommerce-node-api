@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { isAuthenticatedUser } = require("../middleware/auth");
+const { isAuthenticatedUser, autherizeRoles } = require("../middleware/auth");
 const {
   validateRequest,
   validateSignRequest,
@@ -26,7 +26,12 @@ router.post("/login", validateSignRequest, isRequestValidate, loginAdmin);
 /*
  * admin logout.
  */
-router.post("/logout", logoutAdmin);
+router.post(
+  "/logout",
+  isAuthenticatedUser,
+  autherizeRoles("admin"),
+  logoutAdmin
+);
 
 /*
  * admin profile
