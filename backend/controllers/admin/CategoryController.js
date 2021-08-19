@@ -20,6 +20,7 @@ function getParentChieldList(categories, parentId = null) {
       _id: cate._id,
       name: cate.name,
       slug: cate.slug,
+      parent_id: cate.parentId,
       chieldren: getParentChieldList(categories, cate._id),
     });
   }
@@ -30,7 +31,7 @@ function getParentChieldList(categories, parentId = null) {
 | get all categories
 | /api/v1/admin/categories/index
 */
-exports.index = catchAsyncErrors(async (req, res) => {
+exports.index = async (req, res) => {
   Category.find({}).exec((error, categories) => {
     if (error) return res.status(400).json({ error });
     if (categories) {
@@ -38,7 +39,7 @@ exports.index = catchAsyncErrors(async (req, res) => {
       return res.status(200).json({ categoriesList });
     }
   });
-});
+};
 
 /*
 | Create a category

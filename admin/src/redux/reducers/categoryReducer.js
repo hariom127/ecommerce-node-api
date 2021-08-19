@@ -19,6 +19,16 @@ export const categoryReducer = (state = initialState, { type, payload }) => {
     case CategoryActionTypes.GET_CATEGORY_FAILED:
       state = { ...state, loading: false };
       break;
+    // ----ADD CATEGORY--------
+    case CategoryActionTypes.ADD_CATEGORY_REQUEST:
+      state = { ...state, loading: true };
+      break;
+    case CategoryActionTypes.ADD_CATEGORY_SUCCESS:
+      state = { ...state, loading: false, categories: payload };
+      break;
+    case CategoryActionTypes.GET_CATEGORY_FAILED:
+      state = { ...initialState };
+      break;
 
     default:
       return state;

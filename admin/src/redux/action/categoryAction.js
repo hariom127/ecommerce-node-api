@@ -20,3 +20,37 @@ export const getCategory = () => {
     }
   };
 };
+
+export const addCategory = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: CategoryActionTypes.ADD_CATEGORY_REQUEST });
+    const res = await axios.post(`/admin/categories/create`, form);
+    console.log(res, "from action");
+
+    if (res.status === 200) {
+      const { categoriesList } = res.data;
+      dispatch({
+        type: CategoryActionTypes.ADD_CATEGORY_SUCCESS,
+        payload: { categories: categoriesList },
+      });
+    } else {
+      const { message } = res.data;
+      if (res.status === 400) {
+        dispatch({
+          type: CategoryActionTypes.ADD_CATEGORY_FAILED,
+          payload: { message },
+        });
+      }
+      if (res.status === 422) {
+        dispatch({
+          type: CategoryActionTypes.ADD_CATEGORY_FAILED,
+          payload: { message },
+        });
+      }
+      dispatch({
+        type: CategoryActionTypes.ADD_CATEGORY_FAILED,
+        payload: { message },
+      });
+    }
+  };
+};

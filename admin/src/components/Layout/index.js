@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../Header/index";
 import { Container, Row, Col, Breadcrumb } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import "./style.css";
 
 const Layout = (props) => {
   return (

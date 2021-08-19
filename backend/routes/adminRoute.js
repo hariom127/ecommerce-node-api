@@ -26,12 +26,7 @@ router.post("/login", validateSignRequest, isRequestValidate, loginAdmin);
 /*
  * admin logout.
  */
-router.post(
-  "/logout",
-  isAuthenticatedUser,
-  autherizeRoles("admin"),
-  logoutAdmin
-);
+router.post("/logout", logoutAdmin);
 
 /*
  * admin profile
